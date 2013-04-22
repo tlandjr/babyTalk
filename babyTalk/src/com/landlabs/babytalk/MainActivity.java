@@ -24,23 +24,11 @@ public class MainActivity extends Activity {
 		Uri phoneRing = Uri.parse("android.resource://com.landlabs.babytalk/"+R.raw.phone_ring);
 		audio.playSound(this,phoneRing);
 		mHandler = new Handler();
-		mHandler.postDelayed(new Runnable() {
-	        public void run() 
-	        {
-	            tts.speak("Hello?");
-	        }}, 3000);
 		
-		
-		mHandler.postDelayed(new Runnable() {
-	        public void run() 
-	        {
-	            stt.start();
-	            
-	        }}, 1000);
-		
+		answerPhone();
 		getAnswer();
-		stt.clearResult();
 		getName();
+		
 	}
 
 	@Override
@@ -50,19 +38,31 @@ public class MainActivity extends Activity {
 		return true;
 	}
 	
+	public void answerPhone(){
+		mHandler.postDelayed(new Runnable() {
+	        public void run() 
+	        {
+	            tts.speak("Hello?");
+	        }}, 3000);
+		
+		
+		
+	}
+	
 	public void getAnswer(){
 		 
 		mHandler.postDelayed(new Runnable() {
 	        public void run() 
+	        {					
+				tts.speak("Who is this?");
+		    }}, 1000);       
+		
+		mHandler.postDelayed(new Runnable() {
+	        public void run() 
 	        {
-				String answer = "";
-				if (stt.resultAvailable()){
-					answer = stt.getResult();
-					tts.speak("Who is this?");
-				}
-				else					
-				     getAnswer(); 
-	        }}, 1000);                                                                                                                                                                                                                                 
+	            stt.start();
+	            
+	        }}, 1000);
 				    	
 	}
 	
@@ -73,10 +73,10 @@ public class MainActivity extends Activity {
 				String name = "";
 				if (stt.resultAvailable()){
 					name = stt.getResult();
-					if (name != ""){
 						tts.speak("Hi "+ name + " How are you doing today?");
-					} else getName();
-				}
+						stt.stop();
+					} 
+				
 				else					
 				     getName(); 
 	        }}, 1000);       
