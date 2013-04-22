@@ -28,7 +28,7 @@ public class MainActivity extends Activity {
 	        public void run() 
 	        {
 	            tts.speak("Hello?");
-	        }}, 2000);
+	        }}, 3000);
 		
 		
 		mHandler.postDelayed(new Runnable() {
@@ -38,7 +38,8 @@ public class MainActivity extends Activity {
 	            
 	        }}, 1000);
 		
-		getAnswer();	
+		getAnswer();
+		stt.clearResult();
 		getName();
 	}
 
@@ -72,7 +73,9 @@ public class MainActivity extends Activity {
 				String name = "";
 				if (stt.resultAvailable()){
 					name = stt.getResult();
-					tts.speak("Hello "+ name + " How are you doing today?");
+					if (name != ""){
+						tts.speak("Hi "+ name + " How are you doing today?");
+					} else getName();
 				}
 				else					
 				     getName(); 

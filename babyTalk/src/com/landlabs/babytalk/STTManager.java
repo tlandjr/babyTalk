@@ -69,6 +69,10 @@ public String getResult(){
 	
 }
 
+public void clearResult(){
+	data = null;
+}
+
 @Override
 public void onBeginningOfSpeech() {
 	// TODO Auto-generated method stub
